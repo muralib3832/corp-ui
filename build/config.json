@@ -1,0 +1,329 @@
+{
+  "name": "Corp App",
+  "baseUrl": "https://corpapptest.appspot.com/feeds",
+  "pages": [
+    {
+      "name": "Feeds",
+      "id": "characters",
+      "description": "Manage feeds data",
+      "methods": {
+        "getAll": {
+          "label": "Get All",
+          "url": "/getffeeds",
+          "dataPath": "data",
+          "queryParams": [
+            {
+              "name": "search",
+              "value": "",
+              "label": "Search"
+            }
+          ],
+          "display": {
+            "type": "table"
+          },
+          "fields": [
+           
+            {
+              "name": "id",
+              "type": "text",
+              "label": "ID"
+            },
+            {
+              "name": "authorName",
+              "type": "text",
+              "label": "Name"
+            },
+            {
+              "name": "title",
+              "type": "text",
+              "label": "Title"
+            },
+            {
+              "name": "link",
+              "type": "text",
+              "label": "Url"
+            },
+            {
+              "name": "pubDate",
+              "type": "text",
+              "label": "published date"
+            },
+			{
+              "name": "createdDate",
+              "type": "text",
+              "label": "created date"
+            },
+			{
+              "name": "status",
+              "type": "text",
+              "label": "status"
+            }
+          ]
+        },
+        "getSingle": {
+          "url": "/character/:id",
+          "dataPath": null,
+          "queryParams": [],
+          "requestHeaders": {}
+        },
+        "put": {
+          "url": "/character/:id",
+          "actualMethod": null,
+          "fields": [
+            {
+              "name": "location",
+              "label": "Location",
+              "type": "select",
+              "options": ["Kings Landing", "Beyond the Wall", "Winterfell"]
+            },
+            {
+              "name": "isAlive",
+              "label": "Alive?",
+              "type": "boolean"
+            }
+          ]
+        },
+        "post": {
+          "url": "/character",
+          "fields": [
+            {
+              "name": "thumbnail",
+              "label": "Thumbnail",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "name": "realName",
+              "label": "Real Name",
+              "type": "text"
+            },
+            {
+              "name": "location",
+              "label": "Location",
+              "type": "select",
+              "options": ["Kings Landing", "Beyond the Wall", "Winterfell"]
+            },
+            {
+              "name": "isAlive",
+              "label": "Alive?",
+              "type": "boolean"
+            }
+          ]
+        },
+        "delete": {
+          "url": "/feed/:id",
+		  "queryParams": [{
+							"name" : "id",
+							"type" : "text"
+							}]
+        }
+      },
+      "customActions": [{
+          "name":"Post Feed",
+          "url": "/post",
+          "actualMethod": "post",
+		  "arrayType" : "text",
+          "fields": [
+            {
+              "name": "id",
+              "type": "text",
+              "label": "Feeds ID",
+              "readonly": true
+            },
+			{
+    "name": "authorId",
+    "label": "Author Id",
+    "type": "select",
+	 "required": true,
+    "optionSource": {
+      "url": "https://corpapptest.appspot.com/feeds/author/list",
+     "dataPath": "data",
+      "displayPath": "name",
+      "valuePath": "id",
+	  "sortBy": ["name"]
+    }
+  },
+           
+			 {
+              "name": "type",
+              "label": "type",
+              "type": "select",
+              "options": ["BLOGS", "EVENTS", "ADVISORY"]
+            },
+            {
+              "name": "scriptCodeId",
+              "type": "text",
+              "label": "Script Id",
+              "required": false
+            }
+          ]
+        },
+        {
+          "name":"Disable Character",
+          "url": "/character/:id/disable",
+          "actualMethod": "post",
+          "fields": [
+            {
+              "name": "id",
+              "type": "text",
+              "label": "Contact ID",
+              "readonly": true
+            }
+          ]
+        }
+      ]
+    },
+	 {
+      "name": "Authors",
+      "id": "employees",
+      "description": "Manage Authors",
+      "methods": {
+        "getAll": {
+          "label": "Get All",
+          "url": "/author/list",
+          "dataPath": "data",
+          "queryParams": [
+            {
+              "name": "search",
+              "value": "",
+              "label": "Search"
+            }
+          ],
+          "display": {
+            "type": "table",
+            "fields": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              },
+              {
+                "name": "logImageUrl",
+                "type": "image",
+                "label": "Image"
+              },
+              {
+                "name": "twitterId",
+                "type": "text",
+                "label": "twitterId"
+              }
+            ]
+          }
+        },
+        "getSingle": {
+          "url": "/employee/:id",
+          "dataPath": null,
+          "queryParams": [],
+          "requestHeaders": {}
+        },
+        "put": {
+          "url": "/employee/:id",
+          "actualMethod": null,
+          "includeOriginalFields": false,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "name": "jobTitle",
+              "type": "select",
+              "label": "Job Title",
+              "options": ["Executive Producer", "Co-Executive Producer", "RESTool creator ðŸ˜Ž", "A Knows nothing dude."]
+            },
+            {
+              "name": "isFired",
+              "type": "boolean",
+              "label": "Fired?"
+            }
+          ]
+        },
+        "post": {
+          "url": "/author/profile/create",
+          "fields": [
+            {
+              "name": "imgfile",
+              "label": "Image",
+              "type": "image",
+			   "required": false
+            },
+            {
+              "name": "name",
+              "type": "text",
+              "label": "Name"
+           
+            },
+            {
+              "name": "twitterId",
+              "type": "text",
+              "label": "Twitter Id",
+			   "required": false
+            },
+			 {
+              "name": "socialAccounts",
+              "type": "text",
+              "label": "Social Accounts",
+			   "required": false
+            },
+			{
+              "name": "emailId",
+              "type": "text",
+              "label": "Email Id",
+			   "required": false
+            },
+			{
+              "name": "aboutInvestor",
+              "type": "text",
+              "label": "About Investors",
+			   "required": false
+            }
+          ]
+        },
+        "delete": {
+          "url": "/employee/:id"
+        }
+      }
+    },
+	 {
+      "name": "Scripts",
+      "id": "extras",
+      "description": "All Company Names and Script Code Id",
+      "methods": {
+        "getAll": {
+          "label": "Get All",
+          "url": "https://corpapptest.appspot.com/_ah/api/stockboo/v1/scripts/list",
+          "dataPath": "data",
+         
+          "display": {
+            "type": "table",
+            "fields": [
+              {
+                "name": "scriptCodeId",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "companyName",
+                "type": "text",
+                "label": "Company Name"
+              }
+			  
+				
+            ]
+          }
+        }
+      }
+    }
+    
+  ]
+}
